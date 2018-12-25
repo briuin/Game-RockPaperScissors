@@ -1,29 +1,41 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <app-game  v-if="shouldCreateGame" :playerDetail="playerObj"/>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import HelloWorld from './components/HelloWorld.vue';
+import { Component, Prop, Vue } from 'vue-property-decorator';
+import AppGame from './components/Game.vue';
+import {isDevelopmentMode} from './environment';
 
 @Component({
   components: {
-    HelloWorld,
+    AppGame,
   },
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+    @Prop() public player!: string;
+
+    get playerObj() {
+        if (isDevelopmentMode()) {
+            return {name: `p${Math.floor(Math.random() * 10000)}`};
+        }
+        return this.isJsonString(this.player) ? JSON.parse(this.player) : this.player;
+    }
+
+    get shouldCreateGame() {
+        return this.player || isDevelopmentMode();
+    }
+
+    private isJsonString(str: string) {
+        try {
+            JSON.parse(str);
+        } catch (e) {
+            return false;
+        }
+        return true;
+    }
+}
 </script>
 
-<style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
