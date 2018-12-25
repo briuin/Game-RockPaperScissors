@@ -1,21 +1,6 @@
 # rock-paper-scissors
 
-## Project setup
+## Introduction
 ```
-yarn install
-```
-
-### Compiles and hot-reloads for development
-```
-yarn run serve
-```
-
-### Compiles and minifies for production
-```
-yarn run build
-```
-
-### Lints and fixes files
-```
-yarn run lint
+A simple two player game, Demo site: [link](http://pk.land/game/rock%E2%80%93paper%E2%80%93scissors)
 ```
